@@ -10,4 +10,9 @@ class RequireParams::Test < ActionDispatch::IntegrationTest
     post '/main/action_a', params: { a: 1, b: 2 }
     assert_response :bad_request
   end
+
+  test "before_action callbacks should not be called" do
+    post '/main/action_c'
+    assert_response :bad_request
+  end
 end
