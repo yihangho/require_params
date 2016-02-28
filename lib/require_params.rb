@@ -6,7 +6,7 @@ module RequireParams
       prepend_before_action options do
         missing_params = required_params.reject { |x| params.has_key?(x) }
         if missing_params.any?
-          render json: { errors: missing_params.map { |x| {x => ["is missing"]}} }, status: :bad_request
+          render json: { errors: Hash[missing_params.map { |x| [x, ["is missing"]] }] }, status: :bad_request
           false
         end
       end
