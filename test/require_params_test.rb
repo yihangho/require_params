@@ -17,4 +17,11 @@ class RequireParams::Test < ActionDispatch::IntegrationTest
     post '/main/action_c'
     assert_response :bad_request
   end
+
+  test "failure from different calls to require_params should all be reported" do
+    post '/complex/action'
+    assert_response :bad_request
+    reported_missing_params = JSON.parse(@response.body)["errors"].keys.sort
+    assert_equal %w(a c d f), reported_missing_params
+  end
 end
